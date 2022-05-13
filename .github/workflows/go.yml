@@ -41,9 +41,9 @@ jobs:
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ github.event.inputs.TAG_NAME != '' && github.event.inputs.TAG_NAME || github.ref_name }}
-        files: |
-          ./build/wstunnel-linux-amd64.tgz
-          ./build/wstunnel-windows-amd64.zip
+        # files: |
+        #   ./build/wstunnel-linux-amd64.tgz
+        #   ./build/wstunnel-windows-amd64.zip
 
     - name: Upload assets build
       uses: actions/upload-artifact@v2
