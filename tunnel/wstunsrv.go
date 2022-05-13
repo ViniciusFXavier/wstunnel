@@ -42,9 +42,9 @@ const tunnelInactiveRefuseTimeout = 10 * time.Minute // refuse requests for dead
 
 const (
 	//maxReq max queued requests per remote server
-	maxReq = 20
+	maxReq = 100
 	//minTokenLen min number of chars in a token
-	minTokenLen = 16
+	minTokenLen = 0 // default 16
 )
 
 type token string
@@ -285,11 +285,11 @@ func statsHandler(t *WSTunnelServer, w http.ResponseWriter, r *http.Request) {
 // Payload requests are requests that are to be forwarded through the tunnel.
 func payloadHeaderHandler(t *WSTunnelServer, w http.ResponseWriter, r *http.Request) {
 	tok := r.Header.Get("X-Token")
-	if tok == "" {
-		t.Log.Info("HTTP Missing X-Token header", "req", r)
-		http.Error(w, "Missing X-Token header", 400)
-		return
-	}
+	// if tok == "" {
+	// 	t.Log.Info("HTTP Missing X-Token header", "req", r)
+	// 	http.Error(w, "Missing X-Token header", 400)
+	// 	return
+	// }
 	payloadHandler(t, w, r, token(tok))
 }
 
@@ -407,7 +407,8 @@ func tunnelHandler(t *WSTunnelServer, w http.ResponseWriter, r *http.Request) {
 
 // Sanitize the token for logging
 func cutToken(tok token) string {
-	return string(tok)[0:8] + "..."
+	// return string(tok)[0:8] + "..."
+	return string(tok)
 }
 
 func (t *WSTunnelServer) getRemoteServer(tok token, create bool) *remoteServer {

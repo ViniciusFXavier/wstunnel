@@ -241,9 +241,9 @@ func (t *WSTunnelClient) Start() error {
 	}
 
 	// validate token and timeout
-	if t.Token == "" {
-		return fmt.Errorf("Must specify rendez-vous token using -token option")
-	}
+	// if t.Token == "" {
+	// 	return fmt.Errorf("Must specify rendez-vous token using -token option")
+	// }
 
 	tlsClientConfig := tls.Config{}
 	if t.Insecure {
@@ -293,7 +293,8 @@ func (t *WSTunnelClient) Start() error {
 			}
 			url := fmt.Sprintf("%s://%s/_tunnel", t.Tunnel.Scheme, t.Tunnel.Host)
 			timer := time.NewTimer(10 * time.Second)
-			t.Log.Info("WS   Opening", "url", url, "token", t.Token[0:5]+"...")
+			t.Log.Info("WS   Opening", "url", url, "token", t.Token)
+			// t.Log.Info("WS   Opening", "url", url, "token", t.Token[0:5]+"...")
 			ws, resp, err := d.Dial(url, h)
 			if err != nil {
 				extra := ""
