@@ -29,11 +29,11 @@ jobs:
       run: make test
 
     - name: Release
-    uses: softprops/action-gh-release@v1
-    with:
-      files: |
-        build/wstunnel-linux-amd64.tgz
-        build/wstunnel-windows-amd64.zip
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          build/wstunnel-linux-amd64.tgz
+          build/wstunnel-windows-amd64.zip
 
     # - name: Upload assets build
     #   uses: actions/upload-artifact@v2
