@@ -42,14 +42,14 @@ jobs:
       with:
         tag_name: ${{ github.event.inputs.TAG_NAME != '' && github.event.inputs.TAG_NAME || github.ref_name }}
         files: |
-          build/wstunnel-linux-amd64.tgz
-          build/wstunnel-windows-amd64.zip
+          ./build/wstunnel-linux-amd64.tgz
+          ./build/wstunnel-windows-amd64.zip
 
-    # - name: Upload assets build
-    #   uses: actions/upload-artifact@v2
-    #   with:
-    #     name: wstunnel
-    #     path: build/*
+    - name: Upload assets build
+      uses: actions/upload-artifact@v2
+      with:
+        name: wstunnel
+        path: build/*
 
     # - name: Create Release
     #   id: create_release
