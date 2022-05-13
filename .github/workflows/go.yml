@@ -28,15 +28,27 @@ jobs:
     - name: Test
       run: make test
 
-    - name: Upload assets build
-      uses: actions/upload-artifact@v2
-      with:
-        name: wstunnel
-        path: build/*
+    # - name: Upload assets build
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: wstunnel
+    #     path: build/*
 
-    - name: Upload assets dist
-      uses: actions/upload-artifact@v2
-      with:
-        name: wstunnel
-        path: dist/*
+    # - name: Create Release
+    #   id: create_release
+    #   uses: actions/create-release@v1
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.RELEASER_GITHUB_TOKEN }}
+    #   with:
+    #     tag_name: ${{ github.ref }}
+    #     release_name: Release ${{ github.ref }}
+    #     draft: false
+    #     prerelease: false
+
+    - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            build/wstunnel-linux-amd64.tgz
+            build/wstunnel-windows-amd64.zip
 

@@ -1,4 +1,4 @@
-module github.com/rightscale/wstunnel
+module github.com/ViniciusFXavier/wstunnel
 
 go 1.16
 
