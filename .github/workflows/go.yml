@@ -5,9 +5,13 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-  tags:
-    - "*"
+  release:
+    types: [released]
   workflow_dispatch:
+    inputs:
+      TAG_NAME:
+        description: 'Tag name that the major tag will point to'
+        required: true
 
 jobs:
 
@@ -32,8 +36,8 @@ jobs:
 
     - name: Release
       uses: softprops/action-gh-release@v1
-      if: startsWith(github.ref, 'refs/tags/')
       with:
+        tag_name: ${{ github.event.inputs.TAG_NAME != '' && github.event.inputs.TAG_NAME || github.ref_name }}
         files: |
           build/wstunnel-linux-amd64.tgz
           build/wstunnel-windows-amd64.zip
