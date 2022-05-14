@@ -34,22 +34,35 @@ jobs:
     - name: Test
       run: make test
 
-    - name: Release tag
-      run: echo "The release tag ${{ github.event.inputs.TAG_NAME != '' && github.event.inputs.TAG_NAME || github.ref_name }}"
+    - name: Create release
+      uses: Roang-zero1/github-create-release-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASER_GITHUB_TOKEN }}
 
-    - name: Release
-      uses: softprops/action-gh-release@v1
+    - name: Create GitHub release
+      uses: Roang-zero1/github-upload-release-artifacts-action@master
       with:
-        tag_name: ${{ github.event.inputs.TAG_NAME != '' && github.event.inputs.TAG_NAME || github.ref_name }}
-        # files: |
-        #   ./build/wstunnel-linux-amd64.tgz
-        #   ./build/wstunnel-windows-amd64.zip
+        args:
+        - build/
+      env:
+        GITHUB_TOKEN: ${{ secrets.RELEASER_GITHUB_TOKEN }}
 
-    - name: Upload assets build
-      uses: actions/upload-artifact@v2
-      with:
-        name: wstunnel
-        path: build/*
+    # - name: Release tag
+    #   run: echo "The release tag ${{ github.event.inputs.TAG_NAME != '' && github.event.inputs.TAG_NAME || github.ref_name }}"
+
+    # - name: Release
+    #   uses: softprops/action-gh-release@v1
+    #   with:
+    #     tag_name: ${{ github.event.inputs.TAG_NAME != '' && github.event.inputs.TAG_NAME || github.ref_name }}
+    #     # files: |
+    #     #   build/wstunnel-linux-amd64.tgz
+    #     #   build/wstunnel-windows-amd64.zip
+
+    # - name: Upload assets build
+    #   uses: actions/upload-artifact@v2
+    #   with:
+    #     name: wstunnel
+    #     path: build/*
 
     # - name: Create Release
     #   id: create_release
