@@ -33,17 +33,15 @@ jobs:
     - name: Test
       run: make test
 
-    - name: Create release
-      uses: Roang-zero1/github-create-release-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.RELEASER_GITHUB_TOKEN }}
-
-    - name: Create GitHub release
-      uses: Roang-zero1/github-upload-release-artifacts-action@master
+    - uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        - build/
-      env:
-        GITHUB_TOKEN: ${{ secrets.RELEASER_GITHUB_TOKEN }}
+        repo_token: "${{ secrets.RELEASER_GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        prerelease: true
+        title: "Development Build"
+        files: |
+          build/wstunnel-linux-amd64.tgz
+          build/wstunnel-windows-amd64.zip
 
     # - name: Release tag
     #   run: echo "The release tag ${{ github.event.inputs.TAG_NAME != '' && github.event.inputs.TAG_NAME || github.ref_name }}"
